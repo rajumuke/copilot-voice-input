@@ -1,0 +1,47 @@
+<idea-plugin>
+    <id>com.rajumuke.copilot-voice-input</id>
+    <name>Copilot Voice Input</name>
+    <vendor>rajumuke</vendor>
+    <description>Dictate prompts into the focused input (such as the GitHub Copilot chat box) using local whisper.cpp.</description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <projectListeners>
+        <listener class="com.rajumuke.voice.CopilotChatMicInstaller"
+                  topic="com.intellij.openapi.wm.ex.ToolWindowManagerListener"/>
+    </projectListeners>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Copilot Voice Input" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <action id="CopilotVoice.Dictate"
+                class="com.rajumuke.voice.DictateAction"
+                text="Voice: Dictate Into Focused Input"
+                icon="/icons/mic.svg"
+                description="Start/stop recording; transcribed text is pasted into the focused input">
+            <add-to-group group-id="MainToolbarRight" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt V"/>
+        </action>
+        <action id="CopilotVoice.DictateAndSend"
+                class="com.rajumuke.voice.DictateAndSendAction"
+                text="Voice: Dictate And Send"
+                description="Start/stop recording; transcribed text is pasted and Enter is pressed">
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt shift V"/>
+        </action>
+        <action id="CopilotVoice.HandsFree"
+                class="com.rajumuke.voice.HandsFreeToggleAction"
+                text="Voice: Hands-free (say &quot;turn on the mic&quot;)"
+                icon="/icons/handsFree.svg"
+                description="Listen continuously. Say 'turn on the mic' to dictate, 'done' to send, 'cancel' to discard">
+            <add-to-group group-id="MainToolbarRight" anchor="first"/>
+        </action>
+        <action id="CopilotVoice.SelectMic"
+                class="com.rajumuke.voice.SelectMicAction"
+                text="Voice: Select Microphone..."
+                description="Choose which microphone (built-in, headset, USB, Bluetooth) is used for voice input">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
